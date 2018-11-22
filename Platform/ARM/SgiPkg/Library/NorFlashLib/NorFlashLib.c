@@ -13,9 +13,11 @@
  **/
 
 #include <PiDxe.h>
+#include <PiMm.h>
 #include <Library/DebugLib.h>
 #include <Library/IoLib.h>
 #include <Library/NorFlashPlatformLib.h>
+#include <Library/StandaloneMmServicesTableLib.h>
 #include <SgiPlatform.h>
 
 STATIC NOR_FLASH_DESCRIPTION mNorFlashDevices[] = {
@@ -29,6 +31,23 @@ STATIC NOR_FLASH_DESCRIPTION mNorFlashDevices[] = {
     SGI_EXP_SMC_CS1_BASE,
     SGI_EXP_SMC_CS1_BASE,
     SIZE_256KB * 256,
+    SIZE_256KB,
+  },
+};
+
+STATIC NOR_FLASH_DESCRIPTION mSecureNorFlashDevices[] = {
+  {
+    // Secure Boot storage space of 4MB
+    SGI_EXP_SMC_CS2_BASE,
+    SGI_EXP_SMC_CS2_BASE,
+    SIZE_256KB * 16,
+    SIZE_256KB,
+  },
+  {
+    //Secure variable storage space of 1MB*3
+    SGI_EXP_SMC_CS2_BASE,
+    SGI_EXP_SMC_CS2_BASE + SIZE_256KB * 16,
+    SIZE_256KB * 12,
     SIZE_256KB,
   },
 };
@@ -55,7 +74,12 @@ NorFlashPlatformGetDevices (
     return EFI_INVALID_PARAMETER;
   }
 
-  *NorFlashDevices = mNorFlashDevices;
-  *Count = ARRAY_SIZE (mNorFlashDevices);
+  if (!InMm ()) {
+    *NorFlashDevices = mNorFlashDevices;
+    *Count = ARRAY_SIZE (mNorFlashDevices);
+  } else {
+    *NorFlashDevices = mSecureNorFlashDevices;
+    *Count = ARRAY_SIZE (mSecureNorFlashDevices);
+  }
   return EFI_SUCCESS;
 }

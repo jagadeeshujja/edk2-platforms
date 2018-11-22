@@ -16,8 +16,9 @@
   INF_VERSION                    = 0x0001001A
   BASE_NAME                      = NorFlashSgiLib
   FILE_GUID                      = 3f021755-6d74-4065-9ee4-98225267b36e
-  MODULE_TYPE                    = DXE_DRIVER
+  MODULE_TYPE                    = MM_STANDALONE
   VERSION_STRING                 = 1.0
+  PI_SPECIFICATION_VERSION       = 0x00010032
   LIBRARY_CLASS                  = NorFlashPlatformLib
 
 [Sources.common]
@@ -32,4 +33,4 @@
   BaseLib
   DebugLib
   IoLib
-  StandaloneMmServicesTableLib
+  MmServicesTableLib

@@ -27,6 +27,10 @@
 #define SGI_EXP_SMC_CS1_BASE                      0x0C000000
 #define SGI_EXP_SMC_CS1_SZ                        SIZE_64MB
 
+// Expansion AXI - SMC Chip Select 2
+#define SGI_EXP_SMC_CS2_BASE                      0x10000000
+#define SGI_EXP_SMC_CS2_SZ                        SIZE_64MB
+
 // Expansion AXI - SMSC 91C111 (Ethernet)
 #define SGI_EXP_SMSC91X_BASE                      0x18000000
 #define SGI_EXP_SMSC91X_SZ                        SIZE_64MB
